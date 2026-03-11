@@ -1,11 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.usersController = exports.UsersController = void 0;
-const users_service_1 = require("./users.service");
-class UsersController {
+import { usersService } from './users.service';
+export class UsersController {
     getAll(req, res, next) {
         try {
-            const users = users_service_1.usersService.getAll();
+            const users = usersService.getAll();
             res.status(200).json({
                 success: true,
                 data: users,
@@ -25,7 +22,7 @@ class UsersController {
                 });
                 return;
             }
-            const user = users_service_1.usersService.getById(id);
+            const user = usersService.getById(id);
             res.status(200).json({
                 success: true,
                 data: user,
@@ -38,7 +35,7 @@ class UsersController {
     getMe(req, res, next) {
         try {
             const userId = req.user.userId;
-            const user = users_service_1.usersService.getById(userId);
+            const user = usersService.getById(userId);
             res.status(200).json({
                 success: true,
                 data: user,
@@ -49,6 +46,5 @@ class UsersController {
         }
     }
 }
-exports.UsersController = UsersController;
-exports.usersController = new UsersController();
+export const usersController = new UsersController();
 //# sourceMappingURL=users.controller.js.map

@@ -1,11 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.usersService = exports.UsersService = void 0;
-const error_middleware_1 = require("../../shared/middleware/error.middleware");
-const auth_service_1 = require("../auth/auth.service");
-class UsersService {
+import { AppError } from '../../shared/middleware/error.middleware';
+import { authService } from '../auth/auth.service';
+export class UsersService {
     getAll() {
-        const users = auth_service_1.authService.getUsers();
+        const users = authService.getUsers();
         return users.map(user => ({
             id: user.id,
             email: user.email,
@@ -14,10 +11,10 @@ class UsersService {
         }));
     }
     getById(id) {
-        const users = auth_service_1.authService.getUsers();
+        const users = authService.getUsers();
         const user = users.find(u => u.id === id);
         if (!user) {
-            throw new error_middleware_1.AppError('User not found', 404);
+            throw new AppError('User not found', 404);
         }
         return {
             id: user.id,
@@ -27,6 +24,5 @@ class UsersService {
         };
     }
 }
-exports.UsersService = UsersService;
-exports.usersService = new UsersService();
+export const usersService = new UsersService();
 //# sourceMappingURL=users.service.js.map

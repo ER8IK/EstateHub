@@ -1,16 +1,14 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const investments_controller_1 = require("./investments.controller");
-const middleware_1 = require("../../shared/middleware");
-const router = (0, express_1.Router)();
+import { Router } from 'express';
+import { investmentsController } from './investments.controller';
+import { authMiddleware } from '../../shared/middleware';
+const router = Router();
 // POST /api/investments
-router.post('/', middleware_1.authMiddleware, (req, res, next) => investments_controller_1.investmentsController.create(req, res, next));
+router.post('/', authMiddleware, (req, res, next) => investmentsController.create(req, res, next));
 // GET /api/investments
-router.get('/', middleware_1.authMiddleware, (req, res, next) => investments_controller_1.investmentsController.getAll(req, res, next));
+router.get('/', authMiddleware, (req, res, next) => investmentsController.getAll(req, res, next));
 // GET /api/investments/:id
-router.get('/:id', middleware_1.authMiddleware, (req, res, next) => investments_controller_1.investmentsController.getById(req, res, next));
+router.get('/:id', authMiddleware, (req, res, next) => investmentsController.getById(req, res, next));
 // DELETE /api/investments/:id
-router.delete('/:id', middleware_1.authMiddleware, (req, res, next) => investments_controller_1.investmentsController.delete(req, res, next));
-exports.default = router;
+router.delete('/:id', authMiddleware, (req, res, next) => investmentsController.delete(req, res, next));
+export default router;
 //# sourceMappingURL=investments.route.js.map

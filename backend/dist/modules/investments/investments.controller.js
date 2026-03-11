@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.investmentsController = exports.InvestmentsController = void 0;
-const investments_service_1 = require("./investments.service");
-class InvestmentsController {
+import { investmentsService } from './investments.service';
+export class InvestmentsController {
     create(req, res, next) {
         try {
             const userId = req.user.userId;
@@ -18,7 +15,7 @@ class InvestmentsController {
                 });
                 return;
             }
-            const result = investments_service_1.investmentsService.create(userId, dto);
+            const result = investmentsService.create(userId, dto);
             res.status(201).json({
                 success: true,
                 data: result,
@@ -31,7 +28,7 @@ class InvestmentsController {
     getAll(req, res, next) {
         try {
             const userId = req.user.userId;
-            const investments = investments_service_1.investmentsService.getAllByUser(userId);
+            const investments = investmentsService.getAllByUser(userId);
             res.status(200).json({
                 success: true,
                 data: investments,
@@ -52,7 +49,7 @@ class InvestmentsController {
                 });
                 return;
             }
-            const result = investments_service_1.investmentsService.getById(id, userId);
+            const result = investmentsService.getById(id, userId);
             res.status(200).json({
                 success: true,
                 data: result,
@@ -73,7 +70,7 @@ class InvestmentsController {
                 });
                 return;
             }
-            investments_service_1.investmentsService.delete(id, userId);
+            investmentsService.delete(id, userId);
             res.status(200).json({
                 success: true,
                 message: 'Investment deleted',
@@ -84,6 +81,5 @@ class InvestmentsController {
         }
     }
 }
-exports.InvestmentsController = InvestmentsController;
-exports.investmentsController = new InvestmentsController();
+export const investmentsController = new InvestmentsController();
 //# sourceMappingURL=investments.controller.js.map

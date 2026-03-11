@@ -1,30 +1,25 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
-const helmet_1 = __importDefault(require("helmet"));
-const middleware_1 = require("./shared/middleware");
-const auth_route_1 = __importDefault(require("./modules/auth/auth.route"));
-const users_routes_1 = __importDefault(require("./modules/users/users.routes"));
-const properties_route_1 = __importDefault(require("./modules/properties/properties.route"));
-const investments_route_1 = __importDefault(require("./modules/investments/investments.route"));
-const app = (0, express_1.default)();
-app.use((0, cors_1.default)({
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import { errorMiddleware } from './shared/middleware';
+import authRouter from './modules/auth/auth.route';
+import usersRouter from './modules/users/users.routes';
+import propertiesRouter from './modules/properties/properties.route';
+import investmentsRouter from './modules/investments/investments.route';
+const app = express();
+app.use(cors({
     origin: 'http://localhost:3001',
     credentials: true,
 }));
-app.use((0, helmet_1.default)());
-app.use(express_1.default.json());
-app.use('/api/auth', auth_route_1.default);
-app.use('/api/users', users_routes_1.default);
-app.use('/api/properties', properties_route_1.default);
-app.use('/api/investments', investments_route_1.default);
+app.use(helmet());
+app.use(express.json());
+app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/properties', propertiesRouter);
+app.use('/api/investments', investmentsRouter);
 app.get('/health', (req, res) => {
     res.json({ status: 'ok' });
 });
-app.use(middleware_1.errorMiddleware);
-exports.default = app;
+app.use(errorMiddleware);
+export default app;
 //# sourceMappingURL=app.js.map

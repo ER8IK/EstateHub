@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.errorMiddleware = exports.AppError = void 0;
-class AppError extends Error {
+export class AppError extends Error {
     statusCode;
     constructor(message, statusCode) {
         super(message);
@@ -9,8 +6,7 @@ class AppError extends Error {
         this.name = 'AppError';
     }
 }
-exports.AppError = AppError;
-const errorMiddleware = (err, req, res, next) => {
+export const errorMiddleware = (err, req, res, next) => {
     if (err instanceof AppError) {
         res.status(err.statusCode).json({
             success: false,
@@ -24,5 +20,4 @@ const errorMiddleware = (err, req, res, next) => {
         message: 'Internal server error',
     });
 };
-exports.errorMiddleware = errorMiddleware;
 //# sourceMappingURL=error.middleware.js.map

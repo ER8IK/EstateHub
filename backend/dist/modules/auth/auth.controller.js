@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.authController = exports.AuthController = void 0;
-const auth_service_1 = require("./auth.service");
-class AuthController {
+import { authService } from './auth.service';
+export class AuthController {
     async register(req, res, next) {
         try {
             const dto = req.body;
@@ -13,7 +10,7 @@ class AuthController {
                 });
                 return;
             }
-            const result = await auth_service_1.authService.register(dto);
+            const result = await authService.register(dto);
             res.status(201).json({
                 success: true,
                 data: result,
@@ -33,7 +30,7 @@ class AuthController {
                 });
                 return;
             }
-            const result = await auth_service_1.authService.login(dto);
+            const result = await authService.login(dto);
             res.status(200).json({
                 success: true,
                 data: result,
@@ -44,6 +41,5 @@ class AuthController {
         }
     }
 }
-exports.AuthController = AuthController;
-exports.authController = new AuthController();
+export const authController = new AuthController();
 //# sourceMappingURL=auth.controller.js.map

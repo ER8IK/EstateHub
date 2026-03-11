@@ -1,13 +1,10 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.propertiesService = exports.PropertiesService = void 0;
-const error_middleware_1 = require("../../shared/middleware/error.middleware");
-const id_utils_1 = require("../../shared/utils/id.utils");
+import { AppError } from '../../shared/middleware/error.middleware';
+import { generateId } from '../../shared/utils/id.utils';
 const properties = [];
-class PropertiesService {
+export class PropertiesService {
     create(userId, dto) {
         const property = {
-            id: (0, id_utils_1.generateId)(),
+            id: generateId(),
             userId,
             title: dto.title,
             type: dto.type,
@@ -46,15 +43,15 @@ class PropertiesService {
     getByIdPublic(id) {
         const property = properties.find(p => p.id === id);
         if (!property)
-            throw new error_middleware_1.AppError('Property not found', 404);
+            throw new AppError('Property not found', 404);
         return property;
     }
     getById(id, userId) {
         const property = properties.find(p => p.id === id);
         if (!property)
-            throw new error_middleware_1.AppError('Property not found', 404);
+            throw new AppError('Property not found', 404);
         if (property.userId !== userId)
-            throw new error_middleware_1.AppError('Access denied', 403);
+            throw new AppError('Access denied', 403);
         return property;
     }
     update(id, userId, dto) {
@@ -88,6 +85,5 @@ class PropertiesService {
         return properties.find(p => p.id === id);
     }
 }
-exports.PropertiesService = PropertiesService;
-exports.propertiesService = new PropertiesService();
+export const propertiesService = new PropertiesService();
 //# sourceMappingURL=properties.service.js.map
