@@ -6,13 +6,13 @@ export interface Property {
   userId: string;
   title: string;
   type: PropertyType;
-  status: PropertyStatus;    
-  city: string;              
+  status: PropertyStatus;
+  city: string;
   address: string;
-  description?: string;      
+  description?: string | undefined;  
   price: number;
   area: number;
-  rentPerMonth?: number;
+  rentPerMonth?: number | undefined;
   createdAt: Date;
 }
 
@@ -32,6 +32,6 @@ export interface PropertyFilters {
   type?: PropertyType;
   status?: PropertyStatus;
   city?: string;
-  minPrice?: number;
-  maxPrice?: number;
+  minPrice?: number | undefined;  
+  maxPrice?: number | undefined;
 }
