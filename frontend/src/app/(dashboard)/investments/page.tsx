@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, TrendingUp, ArrowUpRight, ArrowDownRight, Trash2, Clock, DollarSign } from 'lucide-react';
@@ -11,7 +11,8 @@ import { CreateInvestmentDto, Property } from '@/lib/types';
 import InvestmentForm from '@/components/investments/InvestmentForm';
 import { InvestmentWithAnalysis } from '@/lib/api/investments.api';
 
-export default function InvestmentsPage() {
+// ✅ useSearchParams вынесен в отдельный компонент
+function InvestmentsContent() {
   const searchParams = useSearchParams();
   const { investments, setInvestments, addInvestment, deleteInvestment, isLoading, setLoading } =
     useInvestmentsStore();
@@ -29,7 +30,6 @@ export default function InvestmentsPage() {
         ]);
         setInvestments(invs);
         setProperties(props);
-        // Если пришли с маркетплейса — открываем форму
         if (searchParams.get('propertyId')) setShowForm(true);
       } finally {
         setLoading(false);
@@ -141,7 +141,6 @@ export default function InvestmentsPage() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm"
               >
-                {/* Шапка */}
                 <div className="flex items-start justify-between mb-5">
                   <div>
                     <div className="font-bold text-gray-900 text-lg">
@@ -164,7 +163,6 @@ export default function InvestmentsPage() {
                   </button>
                 </div>
 
-                {/* ROI + Cash Flow */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div className={`rounded-xl p-4 ${analysis.annualROI >= 0 ? 'bg-emerald-50' : 'bg-red-50'}`}>
                     <div className="flex items-center gap-1.5 mb-1">
@@ -191,7 +189,6 @@ export default function InvestmentsPage() {
                   </div>
                 </div>
 
-                {/* Детали */}
                 <div className="space-y-2 pt-4 border-t border-gray-50">
                   {analysis.monthlyMortgagePayment > 0 && (
                     <div className="flex justify-between text-sm">
@@ -229,7 +226,6 @@ export default function InvestmentsPage() {
         </motion.div>
       )}
 
-      {/* Форма */}
       {showForm && (
         <InvestmentForm
           properties={properties}
@@ -240,5 +236,18 @@ export default function InvestmentsPage() {
         />
       )}
     </div>
+  );
+}
+
+// ✅ Экспортируемая страница оборачивает контент в Suspense
+export default function InvestmentsPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex justify-center py-20">
+        <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    }>
+      <InvestmentsContent />
+    </Suspense>
   );
 }
