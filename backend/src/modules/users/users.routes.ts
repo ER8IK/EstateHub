@@ -2,7 +2,7 @@ import {Router} from 'express';
 import {UsersController} from './users.controller';
 import {authMiddleware} from '../../shared/middleware';
 
-const router = Router();
+const router: Router = Router();
 const usersController = new UsersController();
 
 router.get('/', authMiddleware, (req, res, next) =>

@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { investmentsController } from './investments.controller';
 import { authMiddleware } from '../../shared/middleware';
 
-const router = Router();
+const router: Router = Router();
 
 // POST /api/investments
 router.post('/', authMiddleware, (req, res, next) =>

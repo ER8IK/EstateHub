@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { propertiesController } from './properties.controller';
 import { authMiddleware } from '../../shared/middleware';
 
-const router = Router();
+const router: Router = Router();
 
 router.get('/public', (req, res, next) =>
   propertiesController.getPublic(req, res, next)

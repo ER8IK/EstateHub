@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Express} from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { errorMiddleware } from './shared/middleware';  
@@ -7,7 +7,7 @@ import usersRouter from './modules/users/users.routes';
 import propertiesRouter from './modules/properties/properties.route';
 import investmentsRouter from './modules/investments/investments.route';
 
-const app = express();
+const app: Express = express();
 
 app.use(cors({
     origin: 'http://localhost:3001',
