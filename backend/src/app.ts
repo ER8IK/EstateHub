@@ -10,7 +10,7 @@ import investmentsRouter from './modules/investments/investments.route';
 const app: Express = express();
 
 app.use(cors({
-    origin: 'http://localhost:3001',
+    origin: 'https://estate-acj4jr8qq-eriks-projects-5c7e5c89.vercel.app/',
     credentials: true,
 }));
 app.use(helmet());
