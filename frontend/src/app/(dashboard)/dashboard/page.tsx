@@ -22,7 +22,7 @@ const item = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } };
 const statusColors: Record<string, string> = {
   sale: 'bg-emerald-100 text-emerald-700',
   rent: 'bg-blue-100 text-blue-700',
-  sold: 'bg-gray-100 text-gray-500',
+  sold: 'bg-gray-100 text-gray-600',
 };
 const statusLabels: Record<string, string> = {
   sale: 'Продажа', rent: 'Аренда', sold: 'Продано',
@@ -47,10 +47,10 @@ export default function DashboardPage() {
   const totalCashFlow = investments.reduce((s, i) => s + i.analysis.monthlyCashFlow, 0);
 
   const stats = [
-    { label: 'Объектов', value: properties.length, suffix: '', icon: Home, gradient: 'from-violet-500 to-purple-600', bg: 'bg-violet-50', text: 'text-violet-600' },
-    { label: 'Общая стоимость', value: (totalValue / 1_000_000).toFixed(1), suffix: ' млн ₽', icon: DollarSign, gradient: 'from-blue-500 to-cyan-600', bg: 'bg-blue-50', text: 'text-blue-600' },
-    { label: 'Средний ROI', value: avgROI.toFixed(1), suffix: '%', icon: BarChart3, gradient: avgROI >= 0 ? 'from-emerald-500 to-teal-600' : 'from-red-500 to-rose-600', bg: avgROI >= 0 ? 'bg-emerald-50' : 'bg-red-50', text: avgROI >= 0 ? 'text-emerald-600' : 'text-red-600' },
-    { label: 'Cash Flow / мес', value: Math.round(totalCashFlow).toLocaleString('ru'), suffix: ' ₽', icon: TrendingUp, gradient: totalCashFlow >= 0 ? 'from-amber-500 to-orange-600' : 'from-red-500 to-rose-600', bg: totalCashFlow >= 0 ? 'bg-amber-50' : 'bg-red-50', text: totalCashFlow >= 0 ? 'text-amber-600' : 'text-red-600' },
+    { label: 'Объектов', value: properties.length, suffix: '', icon: Home, bg: 'bg-violet-50', text: 'text-violet-600' },
+    { label: 'Общая стоимость', value: (totalValue / 1_000_000).toFixed(1), suffix: ' млн ₽', icon: DollarSign, bg: 'bg-blue-50', text: 'text-blue-600' },
+    { label: 'Средний ROI', value: avgROI.toFixed(1), suffix: '%', icon: BarChart3, bg: avgROI >= 0 ? 'bg-emerald-50' : 'bg-red-50', text: avgROI >= 0 ? 'text-emerald-600' : 'text-red-600' },
+    { label: 'Cash Flow / мес', value: Math.round(totalCashFlow).toLocaleString('ru'), suffix: ' ₽', icon: TrendingUp, bg: totalCashFlow >= 0 ? 'bg-amber-50' : 'bg-red-50', text: totalCashFlow >= 0 ? 'text-amber-600' : 'text-red-600' },
   ];
 
   if (isLoading) {
@@ -69,7 +69,7 @@ export default function DashboardPage() {
         <h1 className="text-2xl font-bold text-gray-900">
           Привет, {user?.name} 👋
         </h1>
-        <p className="text-gray-400 mt-1 text-sm">Сводка по вашему портфелю недвижимости</p>
+        <p className="text-gray-500 mt-1 text-sm">Сводка по вашему портфелю недвижимости</p>
       </motion.div>
 
       {/* Статистика */}
@@ -77,14 +77,14 @@ export default function DashboardPage() {
         {stats.map((s) => {
           const Icon = s.icon;
           return (
-            <div key={s.label} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm card-hover">
+            <div key={s.label} className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm card-hover">
               <div className={`inline-flex p-2.5 rounded-xl ${s.bg} mb-3`}>
                 <Icon className={`w-4 h-4 ${s.text}`} />
               </div>
               <div className={`text-2xl font-bold ${s.text}`}>
                 {s.value}{s.suffix}
               </div>
-              <div className="text-gray-400 text-sm mt-1">{s.label}</div>
+              <div className="text-gray-500 text-sm mt-1">{s.label}</div>
             </div>
           );
         })}
@@ -101,8 +101,8 @@ export default function DashboardPage() {
           return (
             <Link key={action.href} href={action.href}>
               <div className={`bg-gradient-to-r ${action.gradient} rounded-2xl p-5 text-white card-hover`}>
-                <Icon className="w-5 h-5 mb-2 opacity-80" />
-                <div className="font-medium">{action.label}</div>
+                <Icon className="w-5 h-5 mb-2 opacity-90" />
+                <div className="font-semibold">{action.label}</div>
               </div>
             </Link>
           );
@@ -120,8 +120,8 @@ export default function DashboardPage() {
 
         {properties.length === 0 ? (
           <div className="bg-white border border-dashed border-gray-200 rounded-2xl p-10 text-center">
-            <Home className="w-8 h-8 text-gray-200 mx-auto mb-3" />
-            <p className="text-gray-400 mb-4 text-sm">Объектов пока нет</p>
+            <Home className="w-8 h-8 text-gray-300 mx-auto mb-3" />
+            <p className="text-gray-500 mb-4 text-sm">Объектов пока нет</p>
             <Link href="/properties" className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-blue-600 text-white text-sm px-4 py-2 rounded-xl">
               <Plus className="w-4 h-4" /> Добавить объект
             </Link>
@@ -130,15 +130,16 @@ export default function DashboardPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {properties.slice(0, 3).map(p => (
               <Link key={p.id} href={`/properties/${p.id}`}>
-                <div className="bg-white border border-gray-100 rounded-2xl p-5 card-hover shadow-sm">
+                <div className="bg-white border border-gray-200 rounded-2xl p-5 card-hover shadow-sm">
                   <div className="flex items-start justify-between mb-3">
-                    <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${statusColors[p.status]}`}>
+                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${statusColors[p.status]}`}>
                       {statusLabels[p.status]}
                     </span>
-                    <ArrowUpRight className="w-4 h-4 text-gray-300" />
+                    <ArrowUpRight className="w-4 h-4 text-gray-400" />
                   </div>
-                  <h3 className="font-medium text-gray-900 mb-1 truncate">{p.title}</h3>
-                  <p className="text-gray-400 text-sm mb-3 truncate">{p.city}, {p.address}</p>
+                  {/* ✅ Читаемый текст */}
+                  <h3 className="font-semibold text-gray-900 mb-1 truncate">{p.title}</h3>
+                  <p className="text-gray-600 text-sm mb-3 truncate">{p.city}, {p.address}</p>
                   <div className="text-lg font-bold gradient-text">
                     {p.price.toLocaleString('ru')} ₽
                   </div>
@@ -160,8 +161,8 @@ export default function DashboardPage() {
 
         {investments.length === 0 ? (
           <div className="bg-white border border-dashed border-gray-200 rounded-2xl p-10 text-center">
-            <TrendingUp className="w-8 h-8 text-gray-200 mx-auto mb-3" />
-            <p className="text-gray-400 mb-4 text-sm">Анализов пока нет</p>
+            <TrendingUp className="w-8 h-8 text-gray-300 mx-auto mb-3" />
+            <p className="text-gray-500 mb-4 text-sm">Анализов пока нет</p>
             <Link href="/marketplace" className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-blue-600 text-white text-sm px-4 py-2 rounded-xl">
               <Store className="w-4 h-4" /> Найти объект
             </Link>
@@ -169,12 +170,13 @@ export default function DashboardPage() {
         ) : (
           <div className="space-y-3">
             {investments.slice(0, 3).map(({ investment, analysis }) => (
-              <div key={investment.id} className="bg-white border border-gray-100 rounded-2xl p-5 flex items-center justify-between shadow-sm">
+              <div key={investment.id} className="bg-white border border-gray-200 rounded-2xl p-5 flex items-center justify-between shadow-sm">
                 <div>
                   <div className="font-semibold text-gray-900">
                     {investment.purchasePrice.toLocaleString('ru')} ₽
                   </div>
-                  <div className="text-gray-400 text-sm">
+                  {/* ✅ Было text-gray-400 — не читалось */}
+                  <div className="text-gray-600 text-sm">
                     Взнос: {investment.downPayment.toLocaleString('ru')} ₽
                   </div>
                 </div>
@@ -186,7 +188,7 @@ export default function DashboardPage() {
                     }
                     {analysis.annualROI}%
                   </div>
-                  <div className="text-gray-400 text-sm">ROI годовых</div>
+                  <div className="text-gray-500 text-sm">ROI годовых</div>
                 </div>
               </div>
             ))}

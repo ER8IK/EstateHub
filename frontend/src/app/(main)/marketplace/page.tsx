@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search, MapPin, SlidersHorizontal, Building2,
@@ -301,7 +301,14 @@ function MarketplaceContent() {
 }
 
 // ─── Navbar отдельно — не нужен Suspense ──────────────────────────────────
+'use client';
+
+import { useAuthStore } from '@/lib/store/auth.store';
+
 function MarketplaceNavbar() {
+  const { isAuthenticated, user, logout } = useAuthStore();
+  const router = useRouter();
+
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -311,15 +318,34 @@ function MarketplaceNavbar() {
           </div>
           <span className="font-bold text-xl">Estate<span className="gradient-text">Hub</span></span>
         </Link>
+
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
           <Link href="/marketplace" className="text-violet-600 font-semibold">Маркетплейс</Link>
-          <Link href="/dashboard" className="hover:text-violet-600 transition-colors">Кабинет</Link>
+          {isAuthenticated && (
+            <Link href="/dashboard" className="hover:text-violet-600 transition-colors">Кабинет</Link>
+          )}
         </div>
+
         <div className="flex items-center gap-3">
-          <Link href="/login" className="text-sm font-medium text-gray-600 hover:text-violet-600 transition-colors">Войти</Link>
-          <Link href="/register" className="text-sm font-medium bg-gradient-to-r from-violet-600 to-blue-600 text-white px-4 py-2 rounded-xl hover:opacity-90 transition-opacity">
-            Регистрация
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <span className="text-sm text-gray-600 hidden md:block">
+                {user?.name}
+              </span>
+              <Link href="/dashboard" className="text-sm font-medium bg-gradient-to-r from-violet-600 to-blue-600 text-white px-4 py-2 rounded-xl hover:opacity-90">
+                Кабинет
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href="/login" className="text-sm font-medium text-gray-600 hover:text-violet-600 transition-colors">
+                Войти
+              </Link>
+              <Link href="/register" className="text-sm font-medium bg-gradient-to-r from-violet-600 to-blue-600 text-white px-4 py-2 rounded-xl hover:opacity-90 transition-opacity">
+                Регистрация
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>
