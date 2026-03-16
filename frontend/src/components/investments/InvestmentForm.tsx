@@ -23,7 +23,7 @@ export default function InvestmentForm({
     defaultValues: {
       propertyId: defaultPropertyId || '',
       mortgageRate: 10,
-      mortgageTerm: 15,
+      mortgageTerm: 10,
       expenses: 5000,
     }
   });
