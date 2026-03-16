@@ -300,8 +300,6 @@ function MarketplaceContent() {
   );
 }
 
-// ─── Navbar отдельно — не нужен Suspense ──────────────────────────────────
-'use client';
 
 import { useAuthStore } from '@/lib/store/auth.store';
 
