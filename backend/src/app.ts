@@ -2,6 +2,7 @@ import express, {Express} from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { errorMiddleware } from './shared/middleware';  
+import ticketsRouter from './modules/tickets/tickets.route';
 import authRouter from './modules/auth/auth.route';
 import usersRouter from './modules/users/users.routes';
 import propertiesRouter from './modules/properties/properties.route';
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/properties', propertiesRouter);
+app.use('/api/tickets', ticketsRouter);
 app.use('/api/investments', investmentsRouter)
 app.get('/health', (req,res) => {
     res.json({ status: 'ok' });
