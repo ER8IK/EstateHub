@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import SupportTicketModal from '../components/layout/SupportButton';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 
@@ -14,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ru">
       <body className={`${inter.className} bg-gray-50 text-gray-900 antialiased`}>
         {children}
+        <SupportTicketModal />
       </body>
     </html>
   );
