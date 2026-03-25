@@ -1,5 +1,5 @@
 import Navbar from '@/components/layout/Navbar';
-import SupportButton from '@/components/layout/SupportButton';
+import SupportButton from '@/components/layout/SupportTicketModal';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
