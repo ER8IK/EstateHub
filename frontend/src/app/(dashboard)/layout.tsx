@@ -1,4 +1,5 @@
 import Navbar from '@/components/layout/Navbar';
+import SupportButton from '@/components/layout/SupportButton';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -9,6 +10,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {children}
         </div>
       </main>
+      <SupportButton />  
     </div>
   );
 }
